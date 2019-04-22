@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:v-bind="http://www.w3.org/1999/xhtml"
-      xmlns:v-if="http://www.w3.org/1999/xhtml">
+      xmlns:v-if="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="UTF-8">
   <title>hello Vue</title>
@@ -15,11 +15,24 @@
 
   <button v-bind:disabled="isButtonDisabled">Button</button>
   <p v-if="seen">hello, you can see me!</p>
+  <p v-else="seen">no</p>
   <a v-bind:href="url">click me to jump to baidu website</a>
   <br>=====================<br>
   从新输入 message 内容：<input v-model="inputData"> (默认: hello vue world)
   <p>Original message: "{{ message }}"</p>
   <p>Reversed message: "{{ reversedMessage }}"</p>
+  <br>=====================<br>
+  <h3>v-for demo:</h3>
+  <ul>
+    <li v-for="(value, key) in items">
+      {{ key }} -- {{ value }}
+    </li>
+  </ul>
+  <br>=====================<br>
+
+  <button v-on:click="clickSaySomething">click me...</button>
+  <div @click.ctrl="clickWithCtrl">Do something</div>
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
@@ -36,12 +49,17 @@
     el: '#myTest',
     data: {
       say: 'Hello Vue!',
-      rawHtml: '<span style="color:red;"> this is red font</span>',
+      rawHtml: '<span style="color:red;">this is red font</span>',
       isButtonDisabled: false,
-      seen: 'a',  // true, 'true', 'a', 1 ...
+      seen: '1',  // true, 'true', 'a', 1 ...
       url: 'https://www.baidu.com',
       message: 'hello vue world!',
-      inputData: ''
+      inputData: '',
+      items: {
+        firstName: ['John', 'first'],
+        lastName: 'Doe',
+        age: 30
+      }
     },
     watch: {
       // 如果 `question` 发生改变，这个函数就会运行
@@ -62,6 +80,13 @@
     methods: {
       getTestMethod: function () {
         return 'this is test method return value.'
+      },
+      clickSaySomething: function (event) {
+        console.log(event);
+        console.log('hello you are clicked me...')
+      },
+      clickWithCtrl: function (e) {
+        console.log('clickWithCtrl: ', e)
       }
     }
   })
