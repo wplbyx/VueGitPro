@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:v-bind="http://www.w3.org/1999/xhtml"
+      xmlns:v-if="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>hello Vue</title>
+</head>
+<body>
+
+<div id="myTest">
+  {{ say }} <br>
+  这里的代码需要需要渲染: <span v-html="rawHtml"></span> <br>
+  这里应该是HTML源代码 不参与渲染: {{ rawHtml }} <br>
+
+  <button v-bind:disabled="isButtonDisabled">Button</button>
+  <p v-if="seen">hello, you can see me!</p>
+  <a v-bind:href="url">click me to jump to baidu website</a>
+  <br>=====================<br>
+  从新输入 message 内容：<input v-model="inputData"> (默认: hello vue world)
+  <p>Original message: "{{ message }}"</p>
+  <p>Reversed message: "{{ reversedMessage }}"</p>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+<script>
+
+  /**
+   * v-bind:href="url"  ===  :href="url"
+   * v-on:click
+   *
+   *
+   * @type {Vue}
+   */
+  var vm = new Vue({
+    el: '#myTest',
+    data: {
+      say: 'Hello Vue!',
+      rawHtml: '<span style="color:red;"> this is red font</span>',
+      isButtonDisabled: false,
+      seen: 'a',  // true, 'true', 'a', 1 ...
+      url: 'https://www.baidu.com',
+      message: 'hello vue world!',
+      inputData: ''
+    },
+    watch: {
+      // 如果 `question` 发生改变，这个函数就会运行
+      inputData: function (newQuestion, oldQuestion) {
+        console.log('newQuestion ', newQuestion);
+        console.log('oldQuestion ', oldQuestion);
+      }
+    },
+    created: function () {
+      console.log('create vue instance...', this.say)
+    },
+    computed: {
+      reversedMessage: function () {
+        var str = this.inputData ? this.inputData : this.message;
+        return str.split('').reverse().join('')
+      }
+    },
+    methods: {
+      getTestMethod: function () {
+        return 'this is test method return value.'
+      }
+    }
+  })
+
+
+
+</script>
+</body>
+</html>
